@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "86715642749",
+    "firebase_url": "https://ta-ines-theresia-2023-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ta-ines-theresia-2023",
+    "storage_bucket": "ta-ines-theresia-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86715642749:android:e90d511a83e04eb9d5d214",
+        "android_client_info": {
+          "package_name": "com.example.tinmo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86715642749-h93e0k634pn2gl4r4shb8bgm8b3q05oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRpZq54ZBzQxg-cih5G05WHZVYnvHJYkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86715642749-h93e0k634pn2gl4r4shb8bgm8b3q05oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
