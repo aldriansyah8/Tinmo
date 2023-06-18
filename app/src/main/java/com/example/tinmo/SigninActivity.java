@@ -1,6 +1,7 @@
 package com.example.tinmo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -43,6 +44,12 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
+        //untuk keluar ke home android
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
+        //autentikasi firebase
         mAuth = FirebaseAuth.getInstance();
 
         txtEmail = findViewById(R.id.txtEmail);
@@ -50,13 +57,17 @@ public class SigninActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnDaftar = findViewById(R.id.btnDaftar);
 
+        //tombol login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //menjalan fungsi login
                 loginUserAccount();
             }
         });
 
+        //tombol daftar untuk berpindah ke halaman daftar
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,13 +77,16 @@ public class SigninActivity extends AppCompatActivity {
         });
     }
 
+    //fungsi login
     private void loginUserAccount() {
 
+        //mengambil nilai input email dan password
         String email, password;
         email = txtEmail.getText().toString();
         password = txtPassword.getText().toString();
-        newuser = email.substring(0, 5);
+        newuser = email.substring(0, 5); //mengambil 5 huruf pertama email
 
+        //verifikasi email dan password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
                             "Please enter your name!!",
@@ -89,7 +103,7 @@ public class SigninActivity extends AppCompatActivity {
             return;
         }
 
-        // signin existing user
+        // autentikasi login dengan email dan passwords
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
@@ -125,5 +139,25 @@ public class SigninActivity extends AppCompatActivity {
                                 }
                             }
                         });
+    }
+
+    //keluar dari aplikasi saat menekan tombol back pada android
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Konfirmasi")
+                .setMessage("Apakah Anda ingin keluar dari aplikasi?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("EXIT", true);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Tidak", null)
+                .show();
     }
 }

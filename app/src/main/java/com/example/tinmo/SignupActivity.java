@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
+    //deklarasi variable dan tipe data
     private EditText txtNamaDepan, txtNamaBelakang, txtNomor, txtEmail;
     private TextInputEditText txtPassword;
     private Button btnDaftar;
@@ -38,8 +39,10 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        //variable autentikasi firebase
         mAuth = FirebaseAuth.getInstance();
 
+        //menghubungkan variable java dengan variable desain
         txtNamaDepan = findViewById(R.id.txtNamaDepan);
         txtNamaBelakang = findViewById(R.id.txtNamaBelakang);
         txtNomor = findViewById(R.id.txtNomor);
@@ -47,26 +50,31 @@ public class SignupActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtPassword);
         btnDaftar = findViewById(R.id.btnDaftar);
 
+        //klik tombol daftar
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //menjalankan function registrasi
                 registerNewUser();
             }
         });
     }
 
     private void registerNewUser(){
-
+        //mengambil nilai dari variabel tersebut
         email = txtEmail.getText().toString();
         password = txtPassword.getText().toString();
         namaDepan = txtNamaDepan.getText().toString();
         namaBelakang = txtNamaBelakang.getText().toString();
         nomor = txtNomor.getText().toString();
 
+        //mengambil 5 huruf pertama dari variabel email
         String newuser = email.substring(0,5);
 
+        //koneksi firebase
         database = FirebaseDatabase.getInstance();
 
+        //input data ke firebase
         myRef = database.getReference("user").child(newuser).child("nama_depan");
         myRef.setValue(namaDepan);
 
@@ -82,30 +90,7 @@ public class SignupActivity extends AppCompatActivity {
         myRef = database.getReference("user").child(newuser).child("password");
         myRef.setValue(password);
 
-        /* Reader
-        myRef = database.getReference("user").child(newuser).child("kapasitas_pestisida");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("kelembapan");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("suhu");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("lux0");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("lux1");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("lux2");
-        myRef.setValue(0);
-
-        myRef = database.getReference("user").child(newuser).child("lux3");
-        myRef.setValue(0);
-         */
-
-
+        //verifikasi email dan password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
                             "Please enter youremail!!",
@@ -122,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-
+        //autentikasi email dan password
         mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
